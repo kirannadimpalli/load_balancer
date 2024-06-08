@@ -10,3 +10,6 @@
 
 #docker-compose down
 
+#python -m pytest test_files
+
+#make run_tests

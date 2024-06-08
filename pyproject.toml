@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "load balancer"
+version = "0.1.0"
+description = "Building an HTTP load balancer using Flask"
+authors = ["kiran <kirannadimpalli2000@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pytest = "^7.4.4"
+Flask = "^3.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

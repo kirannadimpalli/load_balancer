@@ -1,15 +1,30 @@
-# load_balancer
+# Load Balancer
 
-## building http load balancer using flask
+## Overview
+This project demonstrates how to build an HTTP load balancer using Flask.
 
-#.\venv\Scripts\activate
+## Setup
 
-#docker build -t server .
+### Create and Activate Virtual Environment
+To create a virtual environment and activate it:
 
-#docker-compose up -d
+```sh
+python -m venv venv
+.\venv\Scripts\activate  # On Windows
+source venv/bin/activate # On Unix or MacOS
+```
 
-#docker-compose down
+### Build Docker Image
 
-#python -m pytest test_files
+```sh
+docker build -t server .
+docker-compose up -d
+docker-compose down
+```
+### Running Tests
 
-#make run_tests
+```sh
+python -m pytest test_files
+make run_tests
+```
+

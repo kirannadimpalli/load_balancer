@@ -70,3 +70,12 @@ def test_path_routing_notfound(client):
 def test_rewrite_host_routing(client):
     result = client.get('/v1', headers={'Host': 'www.mango.com'})
     assert b'This is V2' == result.data
+
+def test_firewall_ip_reject(client):
+    result = client.get('/mango', environ_base={'REMOTE_ADDR': '10.192.0.1'}, headers={'Host': 'www.mango.com'})
+    assert result.status_code == 403
+
+
+def test_firewall_ip_accept(client):
+    result = client.get('/mango', environ_base={'REMOTE_ADDR': '55.55.55.55'}, headers={'Host': 'www.mango.com'})
+    assert result.status_code == 200

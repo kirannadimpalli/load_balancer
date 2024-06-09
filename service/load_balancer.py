@@ -10,6 +10,7 @@ from load_balancer_app.service.utils import (
     process_rules,
     process_rewrite_rules,
     transform_backends_from_config,
+    process_firewall_rules_flag
 )
 
 load_dotenv()
@@ -23,6 +24,9 @@ register = transform_backends_from_config(config)
 def router(path='/'):
     updated_register = healthcheck(register)
     host_header = request.headers['Host']
+
+    if not process_firewall_rules_flag(config, host_header, request.environ['REMOTE_ADDR']):
+        return 'Forbidden', 403
 
     for entry in config['hosts']:
         if host_header == entry['host']:

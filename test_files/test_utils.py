@@ -230,3 +230,60 @@ def test_process_firewall_rules_accept():
     ''')
     results = process_firewall_rules_flag(input, 'www.mango.com', '55.55.55.55')
     assert results
+
+def test_process_firewall_rules_path_reject():
+    input = yaml.safe_load('''
+        hosts:
+          - host: www.mango.com
+            firewall_rules:
+              path_reject:
+                - /messages
+                - /apps
+            servers:
+              - localhost:8081
+              - localhost:8082
+          - host: www.apple.com
+            servers:
+              - localhost:9081
+              - localhost:9082
+        paths:
+          - path: /mango
+            servers:
+              - localhost:8081
+              - localhost:8082
+          - path: /apple
+            servers:
+              - localhost:9081
+              - localhost:9082
+    ''')
+    results = process_firewall_rules_flag(input, 'www.mango.com', path='/apps')
+    assert results == False
+
+
+def test_process_firewall_rules_path_accept():
+    input = yaml.safe_load('''
+        hosts:
+          - host: www.mango.com
+            firewall_rules:
+              path_reject:
+                - /messages
+                - /apps
+            servers:
+              - localhost:8081
+              - localhost:8082
+          - host: www.apple.com
+            servers:
+              - localhost:9081
+              - localhost:9082
+        paths:
+          - path: /mango
+            servers:
+              - localhost:8081
+              - localhost:8082
+          - path: /apple
+            servers:
+              - localhost:9081
+              - localhost:9082
+    ''')
+    results = process_firewall_rules_flag(input, 'www.mango.com', path='/pictures')
+    assert results == True

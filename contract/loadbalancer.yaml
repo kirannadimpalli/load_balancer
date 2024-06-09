@@ -24,6 +24,10 @@ hosts:
     header_rules:
       remove:
         Host: www.apple.com
+    firewall_rules:
+      path_reject:
+        - /messages
+        - /apps
     servers:
       - localhost:9081
       - localhost:9082

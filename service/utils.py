@@ -27,7 +27,7 @@ def healthcheck(register):
 
 def get_healthy_server(host, register):
     try:
-        return random.choice([server for server in register[host] if server.healthy])
+        return least_connections([server for server in register[host] if server.healthy])
     except IndexError:
         return None
     
@@ -51,3 +51,8 @@ def process_rewrite_rules(config, host, path):
             rewrite_rules = entry.get('rewrite_rules', {})
             for current_path, new_path in rewrite_rules['replace'].items():
                 return path.replace(current_path, new_path)
+            
+def least_connections(servers):
+    if not servers:
+        return None
+    return min(servers, key=lambda x: x.open_connections)
